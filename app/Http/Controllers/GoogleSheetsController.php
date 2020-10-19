@@ -22,7 +22,7 @@ class GoogleSheetsController extends Controller
     {
         $url = session('data.url');
         $date = now()->format('d/m/Y');
-        $title = 'Dataurb ' . $date;
+        $title = 'DATAURBE ' . $date;
         $spreadsheet = new Google_Service_Sheets_Spreadsheet([
             'properties' => [
                 'title' => $title
