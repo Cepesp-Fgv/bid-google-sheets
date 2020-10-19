@@ -15,7 +15,7 @@ class GoogleSheetsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(GoogleOAuth2Middleware::class);
+        $this->middleware('google.oauth2');
     }
 
     public function __invoke(Request $request, \Google_Service_Sheets $sheets)
