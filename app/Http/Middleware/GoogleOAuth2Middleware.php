@@ -40,6 +40,7 @@ class GoogleOAuth2Middleware
             $error = $request->input('error');
             $code = $request->input('code');
             $state = $request->input('state');
+            $sessionState = session(static::GOOGLE_STATE);
 
             if (filled($error)) {
 
@@ -54,10 +55,10 @@ class GoogleOAuth2Middleware
 
             }
 
-            else if (filled($state) || ($state !== session(static::GOOGLE_STATE))) {
+            else if (filled($state) || ($state !== $sessionState)) {
 
                 session()->remove(static::GOOGLE_STATE);
-                abort(400, "Invalid OAuth2 state");
+                abort(400, "Invalid OAuth2 state. ($state !== $sessionState)");
 
             }
 
