@@ -56,12 +56,10 @@ class GoogleOAuth2Middleware
 
             }
 
-            else if (filled($state) || ($state !== $sessionState)) {
+            else if (blank($state) || ($state !== $sessionState)) {
 
                 session()->remove(static::GOOGLE_STATE);
-                $typeState = gettype($state);
-                $typeSessionState = gettype($sessionState);
-                abort(400, "Invalid OAuth2 state. ($state ($typeState) !== $sessionState ($typeSessionState))");
+                abort(400, "Invalid OAuth2 state.");
 
             }
 
