@@ -19,3 +19,4 @@ Route::get('/', function () {
 });
 
 Route::get('/open', GoogleSheetsController::class)->name('sheets.open');
+Route::get('/callback', GoogleSheetsController::class)->name('google.callback');

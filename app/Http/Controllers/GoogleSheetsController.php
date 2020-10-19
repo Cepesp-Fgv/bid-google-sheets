@@ -20,9 +20,7 @@ class GoogleSheetsController extends Controller
 
     public function __invoke(Request $request, \Google_Service_Sheets $sheets)
     {
-        $request->validate(['url' => 'required']);
         $url = session('data.url');
-
         $date = now()->format('d/m/Y');
         $title = 'Dataurb ' . $date;
         $spreadsheet = new Google_Service_Sheets_Spreadsheet([
@@ -39,8 +37,6 @@ class GoogleSheetsController extends Controller
                 ["=IMPORTDATA(\"$url\")"]
             ]
         ]));
-
-        dd($spreadsheet->getSpreadsheetUrl());
 
         return redirect()->to($spreadsheet->getSpreadsheetUrl());
     }
