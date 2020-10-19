@@ -40,6 +40,8 @@ class GoogleSheetsController extends Controller
             ]
         ]));
 
+        dd($spreadsheet->getSpreadsheetUrl());
+
         return redirect()->to($spreadsheet->getSpreadsheetUrl());
     }
 }
