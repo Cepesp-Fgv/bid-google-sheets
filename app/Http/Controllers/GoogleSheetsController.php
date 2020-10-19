@@ -36,7 +36,9 @@ class GoogleSheetsController extends Controller
             'values' => [
                 ["=IMPORTDATA(\"$url\")"]
             ]
-        ]));
+        ]), [
+            'valueInputOption' => 'USER_ENTERED'
+        ]);
 
         return redirect()->to($spreadsheet->getSpreadsheetUrl());
     }
