@@ -50,8 +50,9 @@ class GoogleOAuth2Middleware
 
             else if (blank($code)) {
 
+                $authUrl = $provider->getAuthorizationUrl(['prompt' => 'consent']);
                 session()->put(static::GOOGLE_STATE, $provider->getState());
-                return redirect()->to($provider->getAuthorizationUrl(['prompt' => 'consent']));
+                return redirect()->to($authUrl);
 
             }
 
