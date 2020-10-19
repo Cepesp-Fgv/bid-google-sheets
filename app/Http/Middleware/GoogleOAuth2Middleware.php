@@ -17,8 +17,8 @@ class GoogleOAuth2Middleware
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure $next
      * @return mixed
      */
     public function handle(Request $request, Closure $next)
@@ -46,24 +46,21 @@ class GoogleOAuth2Middleware
 
                 abort(400, $error);
 
-            }
+            } else if (blank($code)) {
 
-            else if (blank($code)) {
+                $authUrl = $provider->getAuthorizationUrl(['prompt' => 'consent', 'scope' => [
+                    \Google_Service_Sheets::SPREADSHEETS
+                ]]);
 
-                $authUrl = $provider->getAuthorizationUrl(['prompt' => 'consent']);
                 session()->put(static::GOOGLE_STATE, $provider->getState());
                 return redirect()->to($authUrl);
 
-            }
-
-            else if (blank($state) || ($state !== $sessionState)) {
+            } else if (blank($state) || ($state !== $sessionState)) {
 
                 session()->remove(static::GOOGLE_STATE);
                 abort(400, "Invalid OAuth2 state.");
 
-            }
-
-            else {
+            } else {
 
                 $accessToken = $provider->getAccessToken('authorization_code', compact('code'));
                 session()->put(static::GOOGLE_ACCESS_TOKEN, $accessToken);
