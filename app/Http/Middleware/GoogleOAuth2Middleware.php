@@ -35,7 +35,7 @@ class GoogleOAuth2Middleware
             ]);
 
             if (empty($code)) {
-                return redirect()->to($provider->getAuthorizationUrl());
+                return redirect()->to($provider->getAuthorizationUrl(['prompt' => 'consent']));
             } else {
                 $accessToken = $provider->getAccessToken('authorization_code', compact('code'));
             }
