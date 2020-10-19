@@ -18,4 +18,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/open', GoogleSheetsController::class);
+Route::get('/open', GoogleSheetsController::class)->name('sheets.open');
