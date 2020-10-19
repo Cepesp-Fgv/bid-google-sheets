@@ -14,7 +14,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->register(\Google_Client::class, function () {
+        $this->app->bind(\Google_Client::class, function () {
             $accessToken = GoogleOAuth2Middleware::token();
 
             $client = new \Google_Client();
@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
             return $client;
         });
 
-        $this->app->register(\Google_Service_Sheets::class, function ($app) {
+        $this->app->bind(\Google_Service_Sheets::class, function ($app) {
             $client = $app->make(\Google_Client::class);
             return new \Google_Service_Sheets($client);
         });
