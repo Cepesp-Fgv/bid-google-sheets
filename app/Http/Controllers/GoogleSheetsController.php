@@ -29,7 +29,7 @@ class GoogleSheetsController extends Controller
             ]
         ]);
         $spreadsheet = $sheets->spreadsheets->create($spreadsheet, [
-            'fields' => 'spreadsheetId'
+            'fields' => ['spreadsheetId', 'spreadsheetUrl']
         ]);
 
         $sheets->spreadsheets_values->update($spreadsheet->getSpreadsheetId(), "A1", new \Google_Service_Sheets_ValueRange([
@@ -40,7 +40,6 @@ class GoogleSheetsController extends Controller
             'valueInputOption' => 'USER_ENTERED'
         ]);
 
-        dd($spreadsheet->getSpreadsheetUrl());
         return redirect()->to($spreadsheet->getSpreadsheetUrl());
     }
 }
