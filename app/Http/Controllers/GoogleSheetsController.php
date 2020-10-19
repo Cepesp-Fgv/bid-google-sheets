@@ -40,6 +40,7 @@ class GoogleSheetsController extends Controller
             'valueInputOption' => 'USER_ENTERED'
         ]);
 
+        dd($spreadsheet->getSpreadsheetUrl());
         return redirect()->to($spreadsheet->getSpreadsheetUrl());
     }
 }
