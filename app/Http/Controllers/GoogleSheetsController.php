@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\GoogleOAuth2Middleware;
 use Google_Service_Sheets_Spreadsheet;
 use Illuminate\Http\Request;
 use League\OAuth2\Client\Provider\Google;
@@ -9,23 +10,18 @@ use League\OAuth2\Client\Token\AccessTokenInterface;
 
 class GoogleSheetsController extends Controller
 {
-    public function __invoke(Request $request)
+    /**
+     * GoogleSheetsController constructor.
+     */
+    public function __construct()
+    {
+        $this->middleware(GoogleOAuth2Middleware::class);
+    }
+
+    public function __invoke(Request $request, \Google_Service_Sheets $sheets)
     {
         $request->validate(['url' => 'required']);
-
-        $url = urldecode($request->input('url'));
-
-        if ($redirectResponse = $this->getAccessToken($request, $url))
-            return $redirectResponse;
-
-        /** @var AccessTokenInterface $accessToken */
-        $accessToken = session('google.access-token');
-
-        $client = new \Google_Client();
-        $client->setScopes([\Google_Service_Sheets::SPREADSHEETS]);
-        $client->setAccessToken($accessToken->getToken());
-
-        $sheets = new \Google_Service_Sheets($client);
+        $url = session('data.url');
 
         $date = now()->format('d/m/Y');
         $title = 'Dataurb ' . $date;
@@ -45,38 +41,5 @@ class GoogleSheetsController extends Controller
         ]));
 
         return redirect()->to($spreadsheet->getSpreadsheetUrl());
-    }
-
-    /**
-     * @param Request $request
-     * @param string $url
-     * @return \Illuminate\Http\RedirectResponse|null
-     * @throws \League\OAuth2\Client\Provider\Exception\IdentityProviderException
-     */
-    private function getAccessToken(Request $request, string $url)
-    {
-        /** @var AccessTokenInterface $accessToken */
-        $accessToken = session('google.access-token');
-
-        if (empty($accessToken) || $accessToken->hasExpired()) {
-            $code = $request->input('code');
-
-            $provider = new Google([
-                'clientId' => env('GOOGLE_CLIENT_ID'),
-                'clientSecret' => env('GOOGLE_CLIENT_SECRET'),
-                'redirectUri' => route('sheets.open', [
-                    'url' => $url
-                ]),
-            ]);
-
-            if (empty($code)) {
-                return redirect()->to($provider->getAuthorizationUrl());
-            } else {
-                $accessToken = $provider->getAccessToken('authorization_code', compact('code'));
-            }
-        }
-
-        session()->put('google.access-token', $accessToken);
-        return null;
     }
 }
