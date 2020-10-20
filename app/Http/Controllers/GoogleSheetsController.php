@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Google_Service_Sheets_Spreadsheet;
+use Google_Service_Sheets as GoogleSheetsService;
+use Google_Service_Sheets_Spreadsheet as GoogleSheetsSpreadsheet;
+use Google_Service_Sheets_ValueRange as GoogleSheetsValueRange;
 use Illuminate\Http\Request;
 use Illuminate\Support\LazyCollection;
 use League\Csv\Reader;
@@ -25,13 +27,13 @@ class GoogleSheetsController extends Controller
         });
     }
 
-    public function redirect(\Google_Service_Sheets $sheets)
+    public function redirect(GoogleSheetsService $sheets)
     {
         $title = session('data.title');
         $separator = session('data.separator');
         $url = session('data.url');
 
-        $spreadsheet = new Google_Service_Sheets_Spreadsheet([
+        $spreadsheet = new GoogleSheetsSpreadsheet([
             'properties' => [
                 'title' => $title
             ]
@@ -43,7 +45,7 @@ class GoogleSheetsController extends Controller
         $csv = Reader::createFromString(file_get_contents($url));
         $csv->setDelimiter($separator);
 
-        $sheets->spreadsheets_values->($spreadsheet->getSpreadsheetId(), 'A1', new \Google_Service_Sheets_ValueRange([
+        $sheets->spreadsheets_values->($spreadsheet->getSpreadsheetId(), 'A1', new GoogleSheetsValueRange([
             'values' => (new LazyCollection($csv))->toArray()
         ]), [
             'valueInputOption' => 'USER_ENTERED'

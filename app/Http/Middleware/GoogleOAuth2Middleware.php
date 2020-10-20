@@ -28,6 +28,12 @@ class GoogleOAuth2Middleware
         if ($request->has('url'))
             session()->put('data.url', $request->input('url'));
 
+        if ($request->has('title'))
+            session()->put('data.title', $request->input('title'));
+
+        if ($request->has('separator'))
+            session()->put('data.separator', $request->input('separator'));
+
         if (empty($accessToken) || $accessToken->hasExpired()) {
             session()->put(static::GOOGLE_ACCESS_TOKEN, null);
 
