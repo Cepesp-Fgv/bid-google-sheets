@@ -55,7 +55,11 @@ class GoogleSheetsController extends Controller
 
         $spreadsheet = $this->createSpreadsheet($sheets, $title, $data);
 
-        return redirect()->to("https://docs.google.com/spreadsheets/d/{$spreadsheet->getSpreadsheetId()}/edit#gid=0");
+        $redirectLink = "https://docs.google.com/spreadsheets/d/{$spreadsheet->getSpreadsheetId()}/edit";
+
+        dd($redirectLink);
+
+        return redirect()->to($redirectLink);
     }
 
     /**
@@ -76,11 +80,17 @@ class GoogleSheetsController extends Controller
             'fields' => 'spreadsheetId',
         ]);
 
-        $sheets->spreadsheets_values->update($spreadsheet->getSpreadsheetId(), 'A1', new GoogleSheetsValueRange([
+        $valuesRange = new GoogleSheetsValueRange([
             'values' => $data
-        ]), [
+        ]);
+
+        dump($valuesRange);
+
+        $response = $sheets->spreadsheets_values->update($spreadsheet->getSpreadsheetId(), 'A1', $valuesRange, [
             'valueInputOption' => 'RAW',
         ]);
+
+        dump($response);
 
         return $spreadsheet;
     }
