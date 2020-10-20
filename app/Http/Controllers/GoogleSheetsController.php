@@ -73,6 +73,8 @@ class GoogleSheetsController extends Controller
             'insertDataOption' => 'INSERT_ROWS'
         ]);
 
+        dd($data);
+
         return $spreadsheet;
     }
 
