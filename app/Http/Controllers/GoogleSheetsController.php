@@ -52,13 +52,13 @@ class GoogleSheetsController extends Controller
     }
 
     /**
-     * @param bool $contents
+     * @param string $contents
      * @param string $separator
      * @param string $encoding
      * @return array[]
      * @throws \League\Csv\Exception
      */
-    private function parseContents(bool $contents, string $separator, string $encoding): array
+    private function parseContents(string $contents, string $separator, string $encoding): array
     {
         $csv = Reader::createFromString($contents);
         $csv->setDelimiter($separator);
