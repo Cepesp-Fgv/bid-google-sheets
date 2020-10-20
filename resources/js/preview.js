@@ -14,7 +14,6 @@ $(document).ready(syncPreview);
 function syncPreview() {
     const url = urlInput.val();
     const separator = parseSeparator(separatorInput.val());
-    const selectedEncoding = encodingInput.val();
 
     clearError();
 
@@ -28,7 +27,7 @@ function syncPreview() {
         complete: (results, file) => {
             showSuccess();
             detectedSeparatorInput.val(results.meta.delimiter);
-            showPreview(results.data, selectedEncoding);
+            showPreview(results.data);
         },
         error: () => {
             showError();
@@ -36,7 +35,7 @@ function syncPreview() {
     })
 }
 
-function showPreview(results, selectedEncoding) {
+function showPreview(results) {
     previewTable.html(''); // Clear HTML
 
     function buildRow(row) {
