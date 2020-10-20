@@ -53,8 +53,6 @@ class GoogleSheetsController extends Controller
                 array_push($data, $rowData);
         }
 
-        dd($data);
-
         $spreadsheet = $this->createSpreadsheet($sheets, $title, $data);
 
         return redirect()->to("https://docs.google.com/spreadsheets/d/{$spreadsheet->getSpreadsheetId()}/edit#gid=0");
