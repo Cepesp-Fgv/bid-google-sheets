@@ -12,7 +12,7 @@
                 <div class="card">
                     <div class="card-header">Preparar Dados</div>
                     <div class="card-body">
-                        <form action="{{ route('google.callback') }}" method="post">
+                        <form action="{{ route('google.callback') }}" method="get">
 
                             <div class="form-group">
                                 <label for="title">Título:</label>
@@ -56,19 +56,6 @@
                         </div>
 
                     </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="container vh-100">
-
-        <div class="d-flex justify-content-center align-items-center">
-            <div class="row my-auto">
-                <div class="col-md-10 col-lg-8 col-sm-12 mx-auto">
-
-
                 </div>
             </div>
         </div>
