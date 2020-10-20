@@ -41,7 +41,9 @@ class GoogleSheetsController extends Controller
         $csv = Reader::createFromString($contents);
         $csv->setDelimiter($separator);
 
-        $data = (new LazyCollection($csv))->take(1)->toArray();
+        $data = (new LazyCollection($csv))->map(function ($row) {
+            return array_filter($row, 'filled');
+        })->toArray();
 
         $spreadsheet = $this->createSpreadsheet($sheets, $title, $data);
 
