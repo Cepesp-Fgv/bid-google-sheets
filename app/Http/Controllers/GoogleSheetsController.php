@@ -46,7 +46,7 @@ class GoogleSheetsController extends Controller
             $rowData = [];
             foreach ($row as $cell) {
                 if (filled($cell))
-                    array_push($rowData, mb_convert_encoding($cell, "UTF-8"));
+                    array_push($rowData, mb_convert_encoding($cell, "UTF-8", "LATIN-1"));
             }
 
             if (filled($rowData))
