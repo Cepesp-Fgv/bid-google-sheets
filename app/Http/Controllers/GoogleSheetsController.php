@@ -54,6 +54,7 @@ class GoogleSheetsController extends Controller
     /**
      * @param bool $contents
      * @param string $separator
+     * @param string $encoding
      * @return array[]
      * @throws \League\Csv\Exception
      */
@@ -73,6 +74,7 @@ class GoogleSheetsController extends Controller
             if (filled($rowData))
                 array_push($data, $rowData);
         }
+        dump($encoding);
         dump($data);
 
         return $data;
