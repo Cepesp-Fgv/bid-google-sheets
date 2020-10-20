@@ -3,6 +3,7 @@ import Papa from 'papaparse';
 const urlInput = $('#url-input');
 const detectedSeparatorInput = $('#detected-separator-input');
 const separatorInput = $('#separator-input');
+const encodingInput = $('#encoding-input');
 const previewTable = $('#preview-table');
 const urlValidFeedback = $('#urlValidFeedback');
 const urlInvalidFeedback = $('#urlInvalidFeedback');
@@ -10,10 +11,12 @@ const submitBtn = $('.btn[type=submit]');
 
 urlInput.focusout(syncPreview);
 separatorInput.change(syncPreview);
+encodingInput.change(syncPreview);
 $(document).ready(syncPreview);
 
 function syncPreview() {
     const url = urlInput.val();
+    const encoding = encodingInput.val();
     const separator = parseSeparator(separatorInput.val());
 
     submitBtn.prop('disabled', true);
@@ -23,7 +26,7 @@ function syncPreview() {
     if (!url)
         return;
 
-    Papa.parse('/pipe?url=' + encodeURI(url), {
+    Papa.parse('/pipe?encoding=' + encoding + '&url=' + encodeURI(url), {
         download: true,
         delimiter: separator,
         preview: 10,

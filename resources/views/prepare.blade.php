@@ -70,7 +70,7 @@
 
                         </form>
 
-                        <div class="table-responsive mt-2">
+                        <div class="table-responsive mt-4">
                             <table class="table table-bordered" id="preview-table"></table>
                         </div>
 

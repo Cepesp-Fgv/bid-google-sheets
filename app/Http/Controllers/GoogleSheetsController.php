@@ -20,8 +20,11 @@ class GoogleSheetsController extends Controller
     public function pipe(Request $request)
     {
         $url = $request->input('url');
-        return response()->streamDownload(function () use ($url) {
-            echo file_get_contents($url);
+        $encoding = $request->input('encoding');
+
+        return response()->streamDownload(function () use ($url, $encoding) {
+            $contents = file_get_contents($url);
+            echo mb_convert_encoding($contents, 'UTF-8', $encoding);
         });
     }
 
