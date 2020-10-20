@@ -24,15 +24,7 @@ class GoogleOAuth2Middleware
     public function handle(Request $request, Closure $next)
     {
         $accessToken = static::token();
-
-        if ($request->has('url'))
-            session()->put('data.url', $request->input('url'));
-
-        if ($request->has('title'))
-            session()->put('data.title', $request->input('title'));
-
-        if ($request->has('separator'))
-            session()->put('data.separator', $request->input('separator'));
+        $this->putSessionData($request);
 
         if (empty($accessToken) || $accessToken->hasExpired()) {
             session()->put(static::GOOGLE_ACCESS_TOKEN, null);
@@ -83,5 +75,23 @@ class GoogleOAuth2Middleware
     public static function token()
     {
         return session(static::GOOGLE_ACCESS_TOKEN);
+    }
+
+    /**
+     * @param Request $request
+     */
+    private function putSessionData(Request $request): void
+    {
+        if ($request->has('url'))
+            session()->put('data.url', $request->input('url'));
+
+        if ($request->has('title'))
+            session()->put('data.title', $request->input('title'));
+
+        if ($request->has('separator'))
+            session()->put('data.separator', $request->input('separator'));
+
+        if ($request->has('encoding'))
+            session()->put('data.encoding', $request->input('encoding'));
     }
 }
