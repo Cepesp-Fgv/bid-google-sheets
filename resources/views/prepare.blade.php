@@ -14,19 +14,19 @@
                     <div class="card-body">
                         <form action="{{ route('google.callback') }}" method="get">
 
+                            @error('csv')
+                            <div class="alert alert-danger">
+                                {{ $message }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            @enderror
+
                             <div class="form-group">
                                 <label for="title">Título:</label>
                                 <input type="text" name="title" value="{{ old('title', $title) }}" class="form-control"/>
                             </div>
-
-                            @error('csv')
-                                <div class="alert alert-danger">
-                                    Não foi possível processar o CSV.
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                            @enderror
 
                             <div class="form-group">
                                 <label for="url-input">URL:</label>

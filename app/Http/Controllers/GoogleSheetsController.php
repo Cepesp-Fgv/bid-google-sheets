@@ -28,14 +28,17 @@ class GoogleSheetsController extends Controller
     public function callback(GoogleSheetsService $sheets)
     {
         $title = session('data.title');
-        $separator = session('data.separator');
-        $encoding = session('data.encoding');
+        $separator = session('data.separator', ';');
+        $encoding = session('data.encoding', "Windows-1252");
         $url = session('data.url');
 
         $contents = file_get_contents($url);
 
+        if (empty($title))
+            return redirect()->route('sheets.open')->withInput(compact('title', 'url'))->withErrors("O título é obrigatório", 'csv');
+
         if (empty($contents))
-            return redirect()->route('sheets.open')->withInput(compact('title', 'url'))->withErrors("Could no read URL", 'csv');
+            return redirect()->route('sheets.open')->withInput(compact('title', 'url'))->withErrors("Não foi possível acessar o CSV", 'csv');
 
         $data = $this->parseContents($contents, $separator, $encoding);
 
