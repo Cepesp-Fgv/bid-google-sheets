@@ -34,11 +34,13 @@ class GoogleSheetsController extends Controller
 
         $contents = file_get_contents($url);
 
+        $back = redirect()->route('sheets.open')->withInput(compact('title', 'url'));
+
         if (empty($title))
-            return redirect()->route('sheets.open')->withInput(compact('title', 'url'))->withErrors("O título é obrigatório", 'csv');
+            return $back->withErrors(['csv' => "O título é obrigatório"]);
 
         if (empty($contents))
-            return redirect()->route('sheets.open')->withInput(compact('title', 'url'))->withErrors("Não foi possível acessar o CSV", 'csv');
+            return $back->withErrors(['csv' => "Não foi possível acessar o CSV"]);
 
         $data = $this->parseContents($contents, $separator, $encoding);
 
