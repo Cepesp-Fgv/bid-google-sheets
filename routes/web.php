@@ -14,9 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/open', GoogleSheetsController::class)->name('sheets.open');
-Route::get('/callback', GoogleSheetsController::class)->name('google.callback');
+Route::get('/', [GoogleSheetsController::class, 'open']);
+Route::get('/pipe', [GoogleSheetsController::class, 'pipe'])->name('sheets.pipe');
+Route::get('/open', [GoogleSheetsController::class, 'open'])->name('sheets.open');
+Route::get('/callback', [GoogleSheetsController::class, 'callback'])->name('google.callback')->middleware('google.oauth2');
