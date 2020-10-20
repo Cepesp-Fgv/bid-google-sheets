@@ -45,14 +45,9 @@ class GoogleSheetsService
             'values' => $data
         ]);
 
-        dump($valuesRange);
-
-        $response = $this->api->spreadsheets_values->update($spreadsheet->getSpreadsheetId(), 'A1', $valuesRange, [
-            'valueInputOption' => 'RAW',
-            'includeValuesInResponse' => true
+        $this->api->spreadsheets_values->update($spreadsheet->getSpreadsheetId(), 'A1', $valuesRange, [
+            'valueInputOption' => 'RAW'
         ]);
-
-        dump($response);
 
         return $spreadsheet;
     }
