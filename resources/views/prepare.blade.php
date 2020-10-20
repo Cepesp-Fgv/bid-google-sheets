@@ -12,7 +12,7 @@
                 <div class="card">
                     <div class="card-header">Preparar Dados</div>
                     <div class="card-body">
-                        <form action="{{ route('sheets.redirect') }}" method="post">
+                        <form action="{{ route('google.callback') }}" method="post">
 
                             <div class="form-group">
                                 <label for="title">Título:</label>
