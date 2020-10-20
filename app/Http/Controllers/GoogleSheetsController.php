@@ -43,8 +43,10 @@ class GoogleSheetsController extends Controller
         $data = $this->parseContents($contents, $separator, $encoding);
 
         $spreadsheet = $sheets->create($title, $data);
+        $redirectLink = GoogleSheetsService::link($spreadsheet);
+        dd($redirectLink);
 
-        return redirect()->to(GoogleSheetsService::link($spreadsheet));
+        return redirect()->to($redirectLink);
     }
 
     /**
@@ -69,6 +71,7 @@ class GoogleSheetsController extends Controller
             if (filled($rowData))
                 array_push($data, $rowData);
         }
+        dump($data);
 
         return $data;
     }
