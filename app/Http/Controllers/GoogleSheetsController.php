@@ -45,10 +45,12 @@ class GoogleSheetsController extends Controller
         foreach ($csv as $row) {
             $row = [];
             foreach ($row as $cell) {
-                array_push($row, $cell);
+                if (filled($cell))
+                    array_push($row, $cell);
             }
             array_push($data, $row);
         }
+
 
         $spreadsheet = $this->createSpreadsheet($sheets, $title, $data);
 
