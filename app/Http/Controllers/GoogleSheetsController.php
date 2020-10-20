@@ -43,14 +43,14 @@ class GoogleSheetsController extends Controller
 
         $data = [];
         foreach ($csv as $row) {
-            $row = [];
+            $rowData = [];
             foreach ($row as $cell) {
                 if (filled($cell))
-                    array_push($row, $cell);
+                    array_push($rowData, $cell);
             }
 
-            if (filled($row))
-                array_push($data, $row);
+            if (filled($rowData))
+                array_push($data, $rowData);
         }
 
         dd($data);
