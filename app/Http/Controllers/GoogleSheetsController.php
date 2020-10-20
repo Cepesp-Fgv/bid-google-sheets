@@ -27,7 +27,7 @@ class GoogleSheetsController extends Controller
         });
     }
 
-    public function redirect(GoogleSheetsService $sheets)
+    public function callback(GoogleSheetsService $sheets)
     {
         $title = session('data.title');
         $separator = session('data.separator');
