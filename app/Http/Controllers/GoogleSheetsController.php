@@ -65,11 +65,13 @@ class GoogleSheetsController extends Controller
             'fields' => 'spreadsheetId',
         ]);
 
-        $sheets->spreadsheets_values->update($spreadsheet->getSpreadsheetId(), 'A1', new GoogleSheetsValueRange([
+        $response = $sheets->spreadsheets_values->update($spreadsheet->getSpreadsheetId(), 'A1', new GoogleSheetsValueRange([
             'values' => $data
         ]), [
             'valueInputOption' => 'RAW'
         ]);
+
+        dump((array) $response->toSimpleObject());
 
         return $spreadsheet;
     }
