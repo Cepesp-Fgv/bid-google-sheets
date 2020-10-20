@@ -40,13 +40,12 @@ class GoogleSheetsController extends Controller
             return $back->withErrors(['csv' => "O título é obrigatório"]);
 
         if (empty($contents))
-            return $back->withErrors(['csv' => "Não foi possível acessar o CSV"]);
+            return $back->withErrors(['csv' => "Não foi possível git o CSV"]);
 
         $data = $this->parseContents($contents, $separator, $encoding);
 
         $spreadsheet = $sheets->create($title, $data);
         $redirectLink = GoogleSheetsService::link($spreadsheet);
-        dd($redirectLink);
 
         return redirect()->to($redirectLink);
     }
@@ -74,8 +73,6 @@ class GoogleSheetsController extends Controller
             if (filled($rowData))
                 array_push($data, $rowData);
         }
-        dump($encoding);
-        dump($data);
 
         return $data;
     }

@@ -27,6 +27,7 @@ function syncPreview() {
         download: true,
         delimiter: separator,
         preview: 10,
+        skipEmptyLines: true,
         complete: (results, file) => {
             showSuccess();
             detectedSeparatorInput.val(results.meta.delimiter);

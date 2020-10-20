@@ -58,6 +58,7 @@
                                     <option value="Windows-1252" selected>WINDOWS-1252 (LATIN 1)</option>
                                     <option value="ASCII">ASCII</option>
                                 </select>
+                                <small class="form-text text-muted"><b>Importante!</b> Se o encoding errado for selecionado, a planilha aparecerá vazia.</small>
                             </div>
 
                             <div class="text-center">
