@@ -24,7 +24,10 @@ class GoogleSheetsController extends Controller
 
         return response()->streamDownload(function () use ($url, $encoding) {
             $contents = file_get_contents($url);
-            echo mb_convert_encoding($contents, 'UTF-8', $encoding);
+            $contents = mb_convert_encoding($contents, 'UTF-8', $encoding);
+            session()->put('data.file_data', $contents);
+
+            echo $contents;
         });
     }
 
@@ -34,8 +37,7 @@ class GoogleSheetsController extends Controller
         $separator = session('data.separator', ';');
         $encoding = session('data.encoding', "Windows-1252");
         $url = session('data.url');
-
-        $contents = file_get_contents($url);
+        $contents = session('data.file_data', file_get_contents($url));
 
         $back = redirect()->route('sheets.open')->withInput(compact('title', 'url'));
 
@@ -46,9 +48,14 @@ class GoogleSheetsController extends Controller
             return $back->withErrors(['csv' => "Não foi possível git o CSV"]);
 
         $data = $this->parseContents($contents, $separator, $encoding);
-
         $spreadsheet = $sheets->create($title, $data);
         $redirectLink = GoogleSheetsService::link($spreadsheet);
+
+        session()->remove('data.title');
+        session()->remove('data.separator');
+        session()->remove('data.encoding');
+        session()->remove('data.url');
+        session()->remove('data.file_data');
 
         return redirect()->to($redirectLink);
     }
