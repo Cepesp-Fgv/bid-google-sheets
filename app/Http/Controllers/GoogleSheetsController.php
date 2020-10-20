@@ -69,7 +69,7 @@ class GoogleSheetsController extends Controller
         $sheets->spreadsheets_values->update($spreadsheet->getSpreadsheetId(), 'A1', new GoogleSheetsValueRange([
             'values' => [
                 ["A", "B"],
-                ["C", "D", ""],
+                ["C", "D"],
                 ["E", "F", "G"]
             ]
         ]), [
