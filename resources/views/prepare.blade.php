@@ -16,7 +16,7 @@
 
                             <div class="form-group">
                                 <label for="title">Título:</label>
-                                <input type="text" name="title" value="{{ $title }}" class="form-control"/>
+                                <input type="text" name="title" value="{{ old('title', $title) }}" class="form-control"/>
                             </div>
 
                             @error('csv')
@@ -30,7 +30,7 @@
 
                             <div class="form-group">
                                 <label for="url-input">URL:</label>
-                                <input type="text" name="url" id="url-input" value="{{ $url }}" class="form-control"/>
+                                <input type="text" name="url" id="url-input" value="{{ old('url', $url) }}" class="form-control"/>
                                 <div id="urlValidFeedback" class="valid-feedback" style="display: none">
                                     Tudo certo com seu link!
                                 </div>
