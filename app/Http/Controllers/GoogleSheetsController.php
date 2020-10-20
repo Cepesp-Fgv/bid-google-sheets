@@ -48,9 +48,12 @@ class GoogleSheetsController extends Controller
                 if (filled($cell))
                     array_push($row, $cell);
             }
-            array_push($data, $row);
+
+            if (filled($row))
+                array_push($data, $row);
         }
 
+        dd($data);
 
         $spreadsheet = $this->createSpreadsheet($sheets, $title, $data);
 
