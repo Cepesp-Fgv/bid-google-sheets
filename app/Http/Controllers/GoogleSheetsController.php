@@ -41,7 +41,7 @@ class GoogleSheetsController extends Controller
         $csv = Reader::createFromString($contents);
         $csv->setDelimiter($separator);
 
-        $data = (new LazyCollection($csv))->toArray();
+        $data = (new LazyCollection($csv))->take(1)->toArray();
 
         $spreadsheet = $this->createSpreadsheet($sheets, $title, $data);
 
@@ -61,18 +61,17 @@ class GoogleSheetsController extends Controller
                 'title' => $title
             ]
         ]);
+
         $spreadsheet = $sheets->spreadsheets->create($spreadsheet, [
             'fields' => 'spreadsheetId',
         ]);
 
-        $response = $sheets->spreadsheets_values->append($spreadsheet->getSpreadsheetId(), 'A1', new GoogleSheetsValueRange([
+        $sheets->spreadsheets_values->append($spreadsheet->getSpreadsheetId(), 'A1', new GoogleSheetsValueRange([
             'values' => $data
         ]), [
             'valueInputOption' => 'RAW',
             'insertDataOption' => 'INSERT_ROWS'
         ]);
-
-        dd([ 'data' => $data, 'response' => (array) $response->toSimpleObject() ]);
 
         return $spreadsheet;
     }
