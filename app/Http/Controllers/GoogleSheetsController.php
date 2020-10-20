@@ -45,7 +45,7 @@ class GoogleSheetsController extends Controller
         $csv = Reader::createFromString(file_get_contents($url));
         $csv->setDelimiter($separator);
 
-        $sheets->spreadsheets_values->($spreadsheet->getSpreadsheetId(), 'A1', new GoogleSheetsValueRange([
+        $sheets->spreadsheets_values->update($spreadsheet->getSpreadsheetId(), 'A1', new GoogleSheetsValueRange([
             'values' => (new LazyCollection($csv))->toArray()
         ]), [
             'valueInputOption' => 'USER_ENTERED'
