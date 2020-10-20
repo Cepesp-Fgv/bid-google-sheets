@@ -42,8 +42,8 @@ class GoogleSheetsController extends Controller
         $csv->setDelimiter($separator);
 
         $data = (new LazyCollection($csv))->map(function ($row) {
-            return array_filter($row, 'filled');
-        })->toArray();
+            return array_values(array_filter($row, 'filled'));
+        })->values()->toArray();
 
         $spreadsheet = $this->createSpreadsheet($sheets, $title, $data);
 
