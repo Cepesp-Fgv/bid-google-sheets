@@ -33,6 +33,30 @@ class GoogleSheetsController extends Controller
         $separator = session('data.separator');
         $url = session('data.url');
 
+        $contents = file_get_contents($url);
+
+        if (empty($contents))
+            return redirect()->route('sheets.open')->withInput(compact('title', 'url'))->withErrors("Could no read URL", 'csv');
+
+        $csv = Reader::createFromString($contents);
+        $csv->setDelimiter($separator);
+
+        $data = (new LazyCollection($csv))->toArray();
+        dd($data);
+
+        $spreadsheet = $this->createSpreadsheet($sheets, $title, $data);
+
+        return redirect()->to("https://docs.google.com/spreadsheets/d/{$spreadsheet->getSpreadsheetId()}/edit#gid=0");
+    }
+
+    /**
+     * @param GoogleSheetsService $sheets
+     * @param string $title
+     * @param array $data
+     * @return GoogleSheetsSpreadsheet
+     */
+    private function createSpreadsheet(GoogleSheetsService $sheets, string $title, array $data): GoogleSheetsSpreadsheet
+    {
         $spreadsheet = new GoogleSheetsSpreadsheet([
             'properties' => [
                 'title' => $title
@@ -42,16 +66,13 @@ class GoogleSheetsController extends Controller
             'fields' => 'spreadsheetId',
         ]);
 
-        $csv = Reader::createFromString(file_get_contents($url));
-        $csv->setDelimiter($separator);
-
         $sheets->spreadsheets_values->update($spreadsheet->getSpreadsheetId(), 'A1', new GoogleSheetsValueRange([
-            'values' => (new LazyCollection($csv))->toArray()
+            'values' => $data
         ]), [
             'valueInputOption' => 'USER_ENTERED'
         ]);
 
-        return redirect()->to("https://docs.google.com/spreadsheets/d/{$spreadsheet->getSpreadsheetId()}/edit#gid=0");
+        return $spreadsheet;
     }
 
 }

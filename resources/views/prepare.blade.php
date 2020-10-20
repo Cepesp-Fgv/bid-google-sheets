@@ -19,6 +19,15 @@
                                 <input type="text" name="title" value="{{ $title }}" class="form-control"/>
                             </div>
 
+                            @error('csv')
+                                <div class="alert alert-danger">
+                                    Não foi possível processar o CSV.
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            @enderror
+
                             <div class="form-group">
                                 <label for="url-input">URL:</label>
                                 <input type="text" name="url" id="url-input" value="{{ $url }}" class="form-control"/>

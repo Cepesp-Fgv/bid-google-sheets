@@ -6,6 +6,7 @@ const separatorInput = $('#separator-input');
 const previewTable = $('#preview-table');
 const urlValidFeedback = $('#urlValidFeedback');
 const urlInvalidFeedback = $('#urlInvalidFeedback');
+const submitBtn = $('.btn[type=submit]');
 
 urlInput.focusout(syncPreview);
 separatorInput.change(syncPreview);
@@ -14,6 +15,8 @@ $(document).ready(syncPreview);
 function syncPreview() {
     const url = urlInput.val();
     const separator = parseSeparator(separatorInput.val());
+
+    submitBtn.prop('disabled', true);
 
     clearError();
 
@@ -83,4 +86,5 @@ function showError() {
 function showSuccess() {
     urlInput.addClass('is-valid');
     urlValidFeedback.show();
+    submitBtn.prop('disabled', false);
 }
