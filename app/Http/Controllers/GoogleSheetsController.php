@@ -72,7 +72,7 @@ class GoogleSheetsController extends Controller
             'insertDataOption' => 'INSERT_ROWS'
         ]);
 
-        dump((array) $response->toSimpleObject());
+        dd([ 'data' => $data, 'response' => (array) $response->toSimpleObject() ]);
 
         return $spreadsheet;
     }
