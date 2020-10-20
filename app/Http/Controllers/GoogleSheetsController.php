@@ -67,7 +67,11 @@ class GoogleSheetsController extends Controller
         ]);
 
         $sheets->spreadsheets_values->update($spreadsheet->getSpreadsheetId(), 'A1', new GoogleSheetsValueRange([
-            'values' => $data
+            'values' => [
+                ["A", "B"],
+                ["C", "D", ""],
+                ["E", "F", "G"]
+            ]
         ]), [
             'valueInputOption' => 'RAW',
         ]);
