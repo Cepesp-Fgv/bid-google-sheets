@@ -88,6 +88,7 @@ class GoogleSheetsController extends Controller
 
         $response = $sheets->spreadsheets_values->update($spreadsheet->getSpreadsheetId(), 'A1', $valuesRange, [
             'valueInputOption' => 'RAW',
+            'includeValuesInResponse' => true
         ]);
 
         dump($response);
