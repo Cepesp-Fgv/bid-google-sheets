@@ -42,7 +42,6 @@ class GoogleSheetsController extends Controller
         $csv->setDelimiter($separator);
 
         $data = (new LazyCollection($csv))->toArray();
-        dd($data);
 
         $spreadsheet = $this->createSpreadsheet($sheets, $title, $data);
 
@@ -69,7 +68,7 @@ class GoogleSheetsController extends Controller
         $sheets->spreadsheets_values->update($spreadsheet->getSpreadsheetId(), 'A1', new GoogleSheetsValueRange([
             'values' => $data
         ]), [
-            'valueInputOption' => 'USER_ENTERED'
+            'valueInputOption' => 'RAW'
         ]);
 
         return $spreadsheet;
