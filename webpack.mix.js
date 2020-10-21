@@ -15,5 +15,8 @@ mix.js('resources/js/app.js', 'public/js')
     .extract(['lodash', 'popper.js', 'bootstrap', 'jquery', 'axios'])
     .js('resources/js/preview.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
+
+    .styles(['resources/css/main.css', 'resources/css/index.css'], 'public/dataurb/index.css')
+
     .sourceMaps()
     .version();
