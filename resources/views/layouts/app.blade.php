@@ -83,6 +83,11 @@
             </div>
         </div>
     </div>
+
+    <div style="text-align: center; font-size: 12px">
+        Acesse a nossa <a href="{{ url('privacy-policy') }}">política de privacidade</a><br>
+        Acesse os nossos <a href="{{ url('terms-of-use') }}">termos de uso</a>
+    </div>
 </div>
 <footer class="fgv-site-footer">
     <div class="fgv-container">
