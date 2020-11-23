@@ -73,12 +73,15 @@ class GoogleSheetsController extends Controller
         foreach ($csv as $row) {
             $rowData = [];
             foreach ($row as $cell) {
-                if (filled($cell))
-                    array_push($rowData, mb_convert_encoding($cell, "UTF-8", $encoding));
+                if (filled($cell)) {
+                    $value = trim(mb_convert_encoding($cell, "UTF-8", $encoding), " '\"\t\n\r\0\x0B");
+                    array_push($rowData, $value);
+                } else {
+                    array_push($rowData, " ");
+                }
             }
 
-            if (filled($rowData))
-                array_push($data, $rowData);
+            array_push($data, $rowData);
         }
 
         return $data;
